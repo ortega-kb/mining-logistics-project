@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HPC Mining Logistics</title>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="map"></div>
+
+    <div id="control-panel">
+        <button id="btn-toggle-incident-mode">Mode Incident: OFF</button>
+    </div>
+
+    <div id="hud">
+        <h1>Logistics Center</h1>
+        <div class="stat-row">
+            <span>Server status</span>
+            <span id="ws-status">Connecting...</span>
+        </div>
+        <div class="hud-stats">
+            <div class="stat-box">
+                <span class="stat-title">Total</span>
+                <span class="stat-value" id="count-total">0</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-title">Moving</span>
+                <span class="stat-value moving" id="count-moving">0</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-title">Blocked</span>
+                <span class="stat-value blocked" id="count-blocked">0</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-title">Delivered</span>
+                <span class="stat-value delivered" id="count-delivered">0</span>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

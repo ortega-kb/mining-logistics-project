@@ -1,0 +1,205 @@
+:root {
+    --bg-hud: rgba(255, 255, 255, 0.85);
+    --border-hud: rgba(0, 0, 0, 0.08);
+
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+
+    /* Couleurs de statuts */
+    --accent-color: #0284c7;
+    /* Bleu (Livré) */
+    --success-color: #16a34a;
+    /* Vert (En transit) */
+    --truck-color: #ef4444;
+    /* Rouge (Incident/Bloqué) */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+/* --- LE PANNEAU HUD --- */
+#hud {
+    position: absolute;
+    left: 24px;
+    bottom: 24px;
+    background: var(--bg-hud);
+    color: var(--text-primary);
+    padding: 20px 28px;
+    border-radius: 12px;
+    border: 1px solid var(--border-hud);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+    z-index: 10;
+    min-width: 280px;
+    /* Légèrement élargi pour la grille */
+}
+
+h1 {
+    margin: 0 0 12px 0;
+    font-size: 17px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-primary);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 12px;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--text-secondary);
+}
+
+/* --- NOUVELLE GRILLE DE STATISTIQUES --- */
+.hud-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* Deux colonnes égales */
+    gap: 16px 20px;
+    /* Espacement vertical et horizontal */
+    margin-top: 10px;
+}
+
+.stat-box {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.stat-title {
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+}
+
+.stat-value {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text-primary);
+    font-feature-settings: "tnum";
+}
+
+#control-panel {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+#btn-toggle-incident-mode {
+    padding: 12px 20px;
+    background-color: #4b5563;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#btn-toggle-incident-mode.active {
+    background-color: #ef4444;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.6);
+}
+
+.truck-marker {
+    width: 14px;
+    height: 14px;
+    background-color: var(--truck-color);
+    border: 1.5px solid #ffffff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(239, 68, 68, 0.4);
+    /* Glissement fluide de 1 seconde */
+    transition: transform .45s linear;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6);
+    }
+
+    70% {
+        box-shadow: 0 0 0 12px rgba(239, 68, 68, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    }
+}
+
+.mapboxgl-popup-content {
+    background: var(--bg-hud) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid var(--border-hud);
+    border-radius: 8px;
+    color: var(--text-primary);
+    padding: 8px 12px !important;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+    font-family: 'SF Pro Display', sans-serif;
+    min-width: 140px;
+    max-width: 160px;
+}
+
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+    border-top-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.mapboxgl-popup-close-button {
+    color: var(--text-secondary);
+    font-size: 14px !important;
+    padding: 0 6px !important;
+    line-height: 1.2;
+}
+
+.mapboxgl-popup-close-button:hover {
+    background: transparent;
+    color: var(--truck-color);
+}
+
+.popup-header {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--accent-color);
+    margin-bottom: 6px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 4px;
+}
+
+.popup-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 3px;
+}
+
+.popup-label {
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.popup-value {
+    font-weight: 700;
+}
