@@ -1,0 +1,10 @@
+{
+    "Num_Agents": 10000,
+    "Total_Duration_Sec": 1436.24,
+    "Final_Tick": 4241,
+    "Avg_Routes_Per_Sec": 32.14,
+    "Peak_Routes_Per_Sec": 22284.24,
+    "Avg_Cpu_Usage": 23.01,
+    "Compute_Time_Stability_Std": 0.2445,
+    "Max_Queue_Size": 6014
+}

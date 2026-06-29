@@ -103,12 +103,12 @@ try:
     
     for name, (lon, lat) in cities.items():
         ax.scatter(lon, lat, color="#d9534f", edgecolor="black", s=10, zorder=0)
-        ax.text(lon + 0.03, lat - 0.02, name, fontsize=5, fontweight="bold", 
+        ax.text(lon + 0.03, lat - 0.02, name, fontsize=12, fontweight="bold", 
                 color="#222222", zorder=6, 
                 bbox=dict(facecolor='white', alpha=0.7, edgecolor='none', boxstyle='round,pad=0.2'))
 
     output_filename_labeled = "fig/mining_network_labeled.png"
-    plt.savefig(output_filename_labeled, bbox_inches="tight", dpi=300)
+    plt.savefig(output_filename_labeled, transparent=True, bbox_inches="tight", dpi=300)
     print(f"Labeled network plot saved successfully as '{output_filename_labeled}'")
     plt.close(fig)
 

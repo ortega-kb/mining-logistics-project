@@ -18,7 +18,7 @@ class TruckAgent(mesa.Agent):
         self.destination_city = destination_city
         self.status = TruckStatus.IDLE
         self.route = []
-        self.delay = random.randint(0, 50)
+        self.delay = random.randint(0, 10)
         self.visual_sub_itinerary = []
         self.actual_coordinates = None
         

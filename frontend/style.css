@@ -32,7 +32,7 @@ body {
 #hud {
     position: absolute;
     left: 24px;
-    bottom: 24px;
+    top: 24px;
     background: var(--bg-hud);
     color: var(--text-primary);
     padding: 20px 28px;
