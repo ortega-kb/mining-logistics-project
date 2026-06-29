@@ -44,7 +44,7 @@ La simulation est basée sur **Mesa** (Agent-based modeling) et utilise le calcu
 2.  **Lancement du serveur et de la simulation** :
     Démarrez l'API FastAPI, qui initialisera également la boucle de simulation en arrière-plan.
     ```bash
-    python api/main.py
+    python -m api.main
     ```
 3.  **Interface Utilisateur** : 
     Ouvrez votre navigateur et accédez à `http://localhost:8080/` pour visualiser le tableau de bord interactif de la logistique minière en temps réel.
