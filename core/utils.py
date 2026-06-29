@@ -17,7 +17,6 @@ def euclidean_distance(node_a, node_b, graph):
     x2, y2 = graph.nodes[node_b].get('x', 0), graph.nodes[node_b].get('y', 0)
     return math.sqrt((x1 - x2)**2 + (y1 - y2)**2)
 
-# Le graphe local et pur de ce coeur CPU
 GLOBAL_ROUTING_GRAPH = None
 
 def init_worker(nodes_dict, edges_list):

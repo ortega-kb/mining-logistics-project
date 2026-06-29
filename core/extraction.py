@@ -14,7 +14,6 @@ ox.settings.use_cache = True
 
 print("Starting the extraction of the mining network...")
 
-# Approximate coordinates to cover the mining corridor
 north = -10.50
 south = -13.00
 east = 28.60
@@ -65,7 +64,6 @@ try:
     ox.save_graphml(mining_graph, filepath=graphml_path)
     print(f"Graph successfully saved to '{graphml_path}' for fast loading!")
 
-    # Graph visualization without labels
     fig, ax = ox.plot_graph(
         mining_graph, 
         node_size=0,         
@@ -81,7 +79,6 @@ try:
     print(f"Network plot saved successfully as '{output_filename}'")
     plt.close(fig)
 
-    # Graph visualization with main cities
     fig, ax = ox.plot_graph(
         mining_graph, 
         node_size=0, 

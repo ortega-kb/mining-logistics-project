@@ -23,38 +23,31 @@ class TruckAgent(mesa.Agent):
         self.actual_coordinates = None
         
     def step(self):
-        # 1. Attente au départ
         if self.delay > 0:
             self.delay -= 1
             return
 
-        # 2. Si la route est bloquée sans déviation possible, on attend la dépanneuse
         if self.status == TruckStatus.BLOCKED:
             return
 
-        # 3. Attente du calcul GPS
         if self.status == TruckStatus.ROUTING:
             return 
 
-        # 4. Arrivée à destination
         if self.pos == self.destination_node:
             self.status = TruckStatus.DELIVERED
             self.route = []
             return 
 
-        # 5. Demande de recalcul (ex: le GPS vient d'effacer la route à cause d'un incident)
         if not self.route: 
             self.status = TruckStatus.ROUTING
             return 
 
         self.status = TruckStatus.MOVING
 
-        # 6. Avancée visuelle progressive vers le prochain carrefour
         if self.visual_sub_itinerary:
             self.actual_coordinates = self.visual_sub_itinerary.pop(0)
             return 
 
-        # 7. Franchissement d'un carrefour : on prend le tronçon suivant
         if self.route:
             next_node = self.route.pop(0)
             edge_data = self.model.G.get_edge_data(self.pos, next_node)
@@ -69,7 +62,6 @@ class TruckAgent(mesa.Agent):
                 except Exception:
                     self.visual_sub_itinerary = []
             
-            # Déplacement logique dans Mesa
             self.model.grid.move_agent(self, next_node)
             
             if not self.actual_coordinates and not self.visual_sub_itinerary:

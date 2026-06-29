@@ -34,13 +34,11 @@ class HPCLogisticsModel(mesa.Model):
         for u, v, key, data in self.G.edges(keys=True, data=True):
             data['length'] = float(data.get('length', 1.0))
 
-        # On extrait un dictionnaire { "node_id": (x, y) }
         nodes_dict = {
             str(n): (float(d.get('x', 0.0)), float(d.get('y', 0.0))) 
             for n, d in self.G.nodes(data=True)
         }
         
-        # On extrait une liste de tuples (noeud_dep, noeud_arr, longueur)
         edges_list = []
         for u, v, key, data in self.G.edges(keys=True, data=True):
             edges_list.append((str(u), str(v), float(data.get('length', 1.0))))
@@ -195,7 +193,6 @@ class HPCLogisticsModel(mesa.Model):
         """
         if edge:
             node_u, node_v = edge
-            # Sécurité: Vérifier l'existence dans les deux sens au cas où le graphe est dirigé différemment
             if not self.G.has_edge(node_u, node_v) and not self.G.has_edge(node_v, node_u):
                 return None
         else:
@@ -206,7 +203,6 @@ class HPCLogisticsModel(mesa.Model):
             if not traffic: return None
             (node_u, node_v), _ = traffic.most_common(1)[0]
 
-        # Application du blocage
         self.damaged_edges = []
         for u, v in [(node_u, node_v), (node_v, node_u)]:
             if self.G.has_edge(u, v):
@@ -217,7 +213,6 @@ class HPCLogisticsModel(mesa.Model):
 
         self.incident_timer = duration_ticks
         
-        # Reroutage dynamique des agents affectés
         for agent in self.agents:
             if agent.route:
                 future_path = [agent.pos] + agent.route

@@ -10,31 +10,23 @@ import uvicorn
 from pathlib import Path
 from contextlib import asynccontextmanager
 
-# 1. On crée un modèle pour forcer FastAPI à lire le JSON (Body)
-# 2. On utilise 'str' car NetworkX stocke les ID du GraphML sous forme de texte
 class IncidentRequest(BaseModel):
     node_u: str = None
     node_v: str = None
 
-# 1. Chemin racine (remonte de 'api' vers 'mining-logistics-project')
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# 2. Logger
 logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
-# Imports locaux
 from api.websockets import router as websocket_router, publish_positions
 from simulation.model import HPCLogisticsModel
 
-# 3. Lifespan (Remplace le @app.on_event("startup"))
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup
     logger.info("Starting trucks simulation")
     task = asyncio.create_task(trucks_simulation(app))
     yield
-    # Shutdown
     task.cancel()
 
 app = FastAPI(lifespan=lifespan)
@@ -104,7 +96,6 @@ async def api_trigger_incident(request: IncidentRequest):
 
 @app.post("/api/spawn-truck")
 async def api_spawn_truck(start_city: str = None, end_city: str = None):
-    # Permet de spawn un camion manuellement via une requête POST
     truck = app.state.hpc_logisic_model.spawn_truck(start_city=start_city, end_city=end_city)
     return {"status": "ok", "truck_id": truck.truck_id}
 
@@ -154,6 +145,4 @@ async def get_network_geojson():
     return {"type": "FeatureCollection", "features": features}
 
 if __name__ == "__main__":
-    # ON PASSE L'OBJET 'app' DIRECTEMENT, PAS UNE CHAINE DE CARACTERES
-    # Cela évite tous les problèmes d'importation de modules
     uvicorn.run(app, host="0.0.0.0", port=8080)
